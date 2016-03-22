@@ -53,7 +53,7 @@ a{
 
 }
 .header a:hover{
-	background:url(task7_img/2.png) no-repeat bottom;
+	background:url(img/task7_img/2.png) no-repeat bottom;
 	color:rgb(231,79,77);
 }
 .header #sign_up{
@@ -177,7 +177,7 @@ a{
 .search_wrap select{
 	width:236px;
 	height:36px;
-	background: url(task7_img/9.png) no-repeat 210px #fff;
+	background: url(img/task7_img/9.png) no-repeat 210px #fff;
 	-webkit-appearance: none;
 }
 
