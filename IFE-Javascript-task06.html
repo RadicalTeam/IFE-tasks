@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>IFE-Javascript-task06</title>
+	</head>
+	<style type="text/css">
+	span{
+		margin:10px 5px;
+		text-align: center;
+		display:inline-block;
+		width:30px;
+		height:30px;
+		line-height: 30px;
+		background-color:rgb(245,20,10);
+	}
+	</style>
+	<body>
+		<input type="text" name="num" id="Input">
+		<input type="button" name="left-in" id="left-in" value="左侧入">
+		<input type="button" name="right-in" id="right-in" value="右侧入">
+		<input type="button" name="left-out" id="left-out" value="左侧出">
+		<input type="button" name="right-out" id="right-out" value="右侧出">
+		<div id="wrap"></div>
+	</body>
+	<script type="text/javascript">
+	var inputnum=document.getElementById('Input');
+	var left_in=document.getElementById('left-in');
+	var right_in=document.getElementById('right-in');
+	var left_out=document.getElementById('left-out');
+	var right_out=document.getElementById('right-out');
+	var divwrap=document.getElementById('wrap');
+	//左侧入
+	left_in.onclick=function(){
+		var num=inputnum.value;
+		if(!num) alert("您还没有输入值!");
+		else{
+			var newspan=document.createElement('span');
+			newspan.innerText=num;
+			var childs=divwrap.childNodes;
+			if(childs)
+			{var first=childs[0];
+			divwrap.insertBefore(newspan,first);}
+			else
+			divwrap.appendChild(newspan);
+			inputnum.value="";
+	}
+	}
+	//右侧入
+	right_in.onclick=function(){
+		var num=inputnum.value;
+		if(!num) alert("您还没有输入值!");
+		else{		
+			var newspan=document.createElement('span');
+			newspan.innerText=num;
+			divwrap.appendChild(newspan);
+			inputnum.value="";}
+	}
+	//左侧出
+	left_out.onclick=function(){
+		var first=divwrap.firstChild;
+		if(first){
+		var del_first=divwrap.removeChild(first);
+		alert("删除的节点值为:"+del_first.innerText);}
+		else
+			alert("没有节点可以删除!");
+	}
+	//右侧出
+	right_out.onclick=function(){
+		var last=divwrap.lastChild;
+		if(last){
+		var del_last=divwrap.removeChild(last);
+		alert("删除的节点值为:"+del_last.innerText);}
+		else
+			alert("没有节点可以删除!")
+	}
+	</script>
+</html>
