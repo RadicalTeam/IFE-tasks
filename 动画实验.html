@@ -1,0 +1,81 @@
+<!doctype html>
+<<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>动画实验</title>
+</head>
+<style type="text/css">
+	li{
+		width:200px;
+		height:50px;
+		background-color: green;
+		margin-bottom: 20px;
+
+	}
+	#po{
+		background-color: rgb(20,200,150);
+		width:100px;
+		height:100px;
+		position: absolute;
+		right:0;
+		visibility: visible;
+		
+	}
+	h1{
+		background-color:  transparent;
+		filter:alpha(opacity=20);
+	}
+</style>
+<body>
+<div id="po">
+	<h1>hsidufhiuehrfnf</h1>
+</div>
+	<ul>
+		<li id="li1"></li>
+		<li></li>
+		<li></li>	
+		</ul>
+</body>
+<script type="text/javascript">
+	var ali=document.getElementById('li1');
+	ali.timer=null;
+	ali.onmouseover=function(){
+			move(ali,{height:400},function(){
+				move(ali,{width:400})
+			});
+		};
+	ali.onmouseout=function(){
+			move(ali,{height:50},function(){
+				move(ali,{width:200})
+			});
+		};
+	
+	function move(obj,Json,fn){
+		clearInterval(obj.timer);
+		obj.timer=setInterval(function(){
+			for( name in Json){
+			var flag=true;
+			var nowWidth=parseInt(getStyle(obj,name));
+			var speed=(Json[name]-nowWidth)/10;
+			speed=speed>0?Math.ceil(speed):Math.floor(speed);
+			if(nowWidth!=Json[name])
+				flag=false;
+				obj.style[name]=nowWidth+speed+"px";
+			if(flag){
+				clearInterval(obj.timer);
+				if(fn)
+					fn();
+			}
+		}
+		},30);
+		
+	}
+	function getStyle(obj,atrr){
+		if(obj.currentStyle)
+			return obj.currentStyle[atrr];
+		else
+			return getComputedStyle(obj,false)[atrr];
+	}
+</script>
+</html>

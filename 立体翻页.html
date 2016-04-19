@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>3d正方形</title>
+	<style type="text/css">
+	#myspace{
+		-webkit-perspective:800;
+		-webkit-perspective-origin:50% 50%;
+		overflow: hidden;
+	}
+	#div1{
+		width:400px;
+		height:400px;
+		margin:0 auto;
+		position: relative;
+		-webkit-transform-style:preserve-3d;
+		
+	}
+	.pages{
+		width:400px;
+		line-height: 400px;
+		color:white;
+		text-align: center;
+		font-size: 400px;
+		font-weight: bold;
+		background-color:black;
+		position:absolute;	
+	}
+	#page1{
+		-webkit-transform-origin:bottom;
+		-webkit-transition:transform 1s linear;
+		-webkit-transform:rotateX(0);
+	}
+	#page2,#page3,#page4,#page5,#page6{
+		-webkit-transform-origin:bottom;
+		-webkit-transition:transform 1s linear;
+		-webkit-transform:rotateX(90deg);
+	}
+	#div3{
+		margin-top: 100px;
+		text-align: center;
+	}
+	
+	</style>
+	<script type="text/javascript">
+	var inner=1;
+	function next(){
+		if(inner==6)
+			return;
+		var now=document.getElementById("page"+inner);
+		now.style.webkitTransform="rotateX(-90deg)"
+		inner+=1;
+		var next=document.getElementById("page"+inner);
+		next.style.webkitTransform="rotateX(0deg)";
+	}
+	function prev(){
+		if (inner==1)
+			return;
+		var now=document.getElementById("page"+inner);
+		now.style.webkitTransform="rotateX(90deg)"
+		inner-=1;
+		var next=document.getElementById("page"+inner);
+		next.style.webkitTransform="rotateX(0deg)";
+	}
+
+	</script>>
+</head>
+<body>
+<div id="myspace">
+	<div id="div1">
+		<div  class="pages" id="page1">1</div>
+		<div  class="pages" id="page2">2</div>
+		<div  class="pages" id="page3">3</div>
+		<div  class="pages" id="page4">4</div>
+		<div  class="pages" id="page5">5</div>
+		<div  class="pages" id="page6">6</div>
+	</div>
+	</div>
+	<div id="div3">
+		<a href="javascript:next()">next</a>&nbsp&nbsp
+		<a href="javascript:prev()">prev</a>
+		<div>
+</body>
+
+</html>
