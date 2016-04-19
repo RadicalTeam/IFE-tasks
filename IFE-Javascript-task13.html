@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>二叉树遍历</title>
+</head>
+<style type="text/css">
+	*{
+		padding:0;
+		margin:0;
+	}
+
+	div{
+		border:solid rgb(0,0,0) 1px;
+		width:50%;
+		padding:10px;
+		margin:10px;
+		background-color: rgb(255,255,255);
+		
+	}
+	#parent{
+		display:block;
+	}
+	.spread{
+		display:inline-block;
+		text-align: center;
+		line-height: 20px;
+		height:20px;
+		width:20px;
+		border:solid rgb(0,0,0) 1px;
+	}
+	input{
+		display: inline-block;
+		width: 200px;
+		height:40px;
+	}
+</style>
+<body>
+	<input type="text" id="addText">
+ 	<input type="button" id="addElement" value="添加节点">
+ 	<input type="button" id="btn4" value="广度遍历"><br/>
+ 	<input type="text" id="searchText" >
+ 	<input type="button" id="guangSearch" value="广度查询">
+ 	<input type="button" id="deleteElement" value="删除选中节点">
+
+ 	<div id="parent" class="level1"><input type="button" class="spread" value="+">1
+ 		<div  class="level2" style="display:none"><input type="button"  class="spread" value="+">2
+ 			<div class="level3" style="display:none"><input type="button"  class="spread" value="+">4
+ 				<div class="level4" style="display:none">8</div>
+ 			</div>
+ 			<div class="level3" style="display:none"><input type="button"  class="spread" value="+">5
+ 				<div class="level4" style="display:none">9</div>
+ 			</div>
+ 		</div>
+ 		<div  class="level2" style="display:none"><input type="button"  class="spread" value="+">3
+ 			<div class="level3" style="display:none"><input type="button"  class="spread" value="+">6
+ 				<div class="level4" style="display:none">10</div>
+ 			</div>
+ 			<div class="level3" style="display:none"><input type="button"  class="spread" value="+">7
+ 				<div class="level4" style="display:none">11</div>
+ 			</div>
+ 		</div>
+ 	</div><br/>
+</body>
+<script src="js/IFE-js-task13.js"></script>
+<script type="text/javascript">
+	var spreadBtn=document.getElementsByClassName('spread');
+	for(i in spreadBtn){
+		spreadBtn[i].onclick=spreadChilds;
+	}
+	function spreadChilds(){
+		event.stopPropagation();
+		var P=this.parentNode;
+		var P_childs=getChilds(P);
+		if(this.value=="+"){
+			for(i in P_childs){
+				P_childs[i].style.display="block";
+			}
+			this.value="-"
+			return;
+		}
+		if(this.value=="-"){
+			for(i in P_childs){
+				P_childs[i].style.display="none";
+			}
+			this.value="+"
+			return;
+		}
+	}
+</script>
+</html>

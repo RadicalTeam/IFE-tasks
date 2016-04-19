@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>二叉树遍历</title>
+</head>
+<style type="text/css">
+	*{
+		padding:0;
+		margin:0;
+	}
+	div{
+		border:solid rgb(0,0,0) 1px;
+		display: inline-block;
+		padding:10px;
+		margin:10px;
+		background-color: rgb(255,255,255);
+	}
+	#parent{
+		width:80%;
+		height:420px;
+	}
+	.level2{
+		width:450px;
+		height:360px;
+	}
+	.level3{
+		width:170px;
+		height: 320px;
+	}
+	.level4{
+		width:80px;
+		height: 280px;
+	}
+	input{
+		display: inline-block;
+		width: 200px;
+		height:40px;
+	}
+</style>
+<body>
+ 	<div id="parent" class="level1">1
+ 		<div  class="level2">2
+ 			<div class="level3">4
+ 				<div class="level4">8</div>
+ 			</div>
+ 			<div class="level3">5
+ 				<div class="level4">9</div>
+ 			</div>
+ 		</div>
+ 		<div  class="level2">3
+ 			<div class="level3">6
+ 				<div class="level4">10</div>
+ 			</div>
+ 			<div class="level3">7
+ 				<div class="level4">11</div>
+ 			</div>
+ 		</div>
+ 	</div><br/>
+ 	<input type="button" id="btn1" value="前序遍历">
+ 	<input type="button" id="btn2" value="中序遍历">
+ 	<input type="button" id="btn3" value="后序遍历">
+ 	<input type="button" id="btn4" value="广度遍历"><br/>
+ 	<input type="text" id="searchText" >
+ 	<input type="button" id="preSearch" value="前序查询">
+ 	<input type="button" id="zhongSearch" value="中序查询">
+ 	<input type="button" id="houSearch" value="后序查询">
+ 	<input type="button" id="guangSearch" value="广度查询">
+
+</body>
+<script type="text/javascript">
+function $(id){
+	return document.getElementById(id);
+}
+var parent=$('parent');
+var btn2=$('btn2');
+var btn1=$('btn1');
+var btn3=$('btn3');
+var btn4=$('btn4');
+var  searchText=$('searchText');
+var preSearch=$('preSearch');
+var zhongSearch=$('zhongSearch');
+var houSearch=$('houSearch');
+var guangSearch=$('guangSearch');
+var stack=new Array();
+preSearch.onclick=function(){
+	stack=[];
+	searchElement(preOrder,parent);
+}
+zhongSearch.onclick=function(){
+	stack=[];
+	searchElement(zhongOrder,parent);
+}
+houSearch.onclick=function(){
+	stack=[];
+	searchElement(houOrder,parent);
+}
+guangSearch.onclick=function(){
+	stack=[];
+	searchElement(guangOrder,parent);
+}
+btn1.onclick=function(){
+	stack=[];
+	preOrder(parent);
+	bianli();
+}
+btn2.onclick=function(){
+	stack=[];
+	zhongOrder(parent);
+	bianli();
+}
+btn3.onclick=function(){
+	stack=[];
+	houOrder(parent);
+	bianli();
+}
+btn4.onclick=function(){
+	stack=[];
+	guangOrder(parent);
+	bianli();
+}
+//遍历可视化
+	function bianli(){
+		var i=0;
+		 var timer=setInterval(function(){
+		 	if(i==stack.length){
+				clearInterval(timer);
+				stack[i-1].style.backgroundColor="rgb(255,255,255)";	
+				return;
+			}
+		 	if(i>0)
+		 		stack[i-1].style.backgroundColor="rgb(255,255,255)";	
+		 	      	stack[i].style.backgroundColor="rgb(255,0,0)";
+			i++;
+		},1000);
+	}
+	//前序遍历
+	function preOrder(node) {
+		    stack.push(node);
+		    if(getChilds(node)[0]) {
+		        preOrder(getChilds(node)[0]);
+		    }
+		    if(getChilds(node)[1]) {
+		        preOrder(getChilds(node)[1]);
+		    }
+}
+	//中序遍历
+	function zhongOrder(node) {
+		    if(getChilds(node)[0]) {
+		        zhongOrder(getChilds(node)[0]);
+		    }
+		     stack.push(node);
+		    if(getChilds(node)[1]) {
+		        zhongOrder(getChilds(node)[1]);
+		    }
+};
+	//后序遍历
+	function houOrder(node){
+		if(getChilds(node)[0]){
+			houOrder(getChilds(node)[0]);
+		}
+		if(getChilds(node)[1]){
+			houOrder(getChilds(node)[1]);
+		}
+		stack.push(node);
+	}
+	//广度遍历
+	function guangOrder(node){
+		var que=[node];
+		while(que.length!=0){
+			node=que.shift();
+			stack.push(node);
+		if(getChilds(node)[0])
+			que.push(getChilds(node)[0]);
+		if(getChilds(node)[1])
+			que.push(getChilds(node)[1]);
+		}
+	}
+	//获取子元素，使获取的都为元素节点
+	function getChilds(obj){
+		var childs=obj.childNodes;
+		var realChilds=new Array();
+		for (index in childs){
+			if(parseInt(childs[index].nodeType)==1)
+				realChilds.push(childs[index]);
+		}
+		return realChilds;
+	}
+	function searchElement(fun,obj){
+		var num=searchText.value;
+		fun(obj);
+		var i=0;
+		var timer=setInterval(function(){
+			if(i==stack.length){
+				clearInterval(timer);
+				stack[i-1].style.backgroundColor="rgb(255,255,255)";
+				alert("没有你要找的元素");	
+				return;
+			}
+		 	if(i>0)
+		 		stack[i-1].style.backgroundColor="rgb(255,255,255)";
+		 		stack[i].style.backgroundColor="rgb(7,123,13)";
+		 	if(getInnerText(stack[i])==num)
+		 		clearInterval(timer);
+			i++;
+		},500)
+	}
+	function getInnerText(node){
+		var text=node.innerText;
+		var content=text.split(" ");
+		return content[0];
+	}
+
+</script>
+</html>

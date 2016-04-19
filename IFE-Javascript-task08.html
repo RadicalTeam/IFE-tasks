@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>IFE-Javascript-task06</title>
+	</head>
+	<style type="text/css">
+	#wrap{
+		height:200px;
+	}
+	span{
+		margin:10px 5px;
+		text-align: center;
+		display:inline-block;
+		height:30px;
+		line-height: 30px;
+		background-color:rgb(245,20,10);
+		color:#fff;
+		padding:10px;
+	}
+	.green{
+		background-color: rgb(20,240,10);
+	}
+	.red{
+		background-color:red;
+	}
+	</style>
+	<body>
+		<textarea  name="num" id="Input">12 13 14 15 16 17 18</textarea>
+		<input type="button" name="left-in" id="left-in" value="左侧入">
+		<input type="button" name="right-in" id="right-in" value="右侧入">
+		<input type="button" name="left-out" id="left-out" value="左侧出">
+		<input type="button" name="right-out" id="right-out" value="右侧出">
+		<div id="wrap"></div>
+		<br/>
+		<input type="text" id="search">
+		<input type="button" value="查询" id="searchBtn">
+
+	</body>
+	<script type="text/javascript">
+	var inputnum=document.getElementById('Input');
+	var left_in=document.getElementById('left-in');
+	var right_in=document.getElementById('right-in');
+	var left_out=document.getElementById('left-out');
+	var right_out=document.getElementById('right-out');
+	var divwrap=document.getElementById('wrap');
+	var search=document.getElementById('search');
+	var searchBtn=document.getElementById('searchBtn');
+	function trim(string){
+		return string.replace(/(^\s*)|(\s$)/ig,'');
+	}
+	//获得数组
+	function hookArray(){
+		var string1=trim(inputnum.value);
+		var stringArray=string1.split(/[,_ 、<>\n\r\t]+/);
+		return stringArray;
+	}
+
+	//左侧入
+	left_in.onclick=function(){
+		var num=hookArray();
+		if(!num) alert("您还没有输入值!");
+		else{ 
+			for(index in num){
+			var newspan=document.createElement('span');
+			newspan.innerHTML=num[index]+"\n";
+			var childs=divwrap.childNodes;
+			if(childs)
+			{var first=childs[0];
+			divwrap.insertBefore(newspan,first);}
+			else
+			divwrap.appendChild(newspan);
+			inputnum.value="";
+		}
+	}
+	}
+	//右侧入
+	right_in.onclick=function(){
+		var num=hookArray();
+		if(!num) alert("您还没有输入值!");
+		else{		
+			for(index in num){
+			var newspan=document.createElement('span');
+			newspan.innerHTML=num[index];
+			divwrap.appendChild(newspan);
+			inputnum.value="";}
+		}
+	}
+	//左侧出
+	left_out.onclick=function(){
+		var first=divwrap.firstChild;
+		if(first){
+		var del_first=divwrap.removeChild(first);
+		alert("删除的节点值为:"+del_first.innerHTML);}
+		else
+			alert("没有节点可以删除!");
+	}
+	//右侧出
+	right_out.onclick=function(){
+		var last=divwrap.lastChild;
+		if(last){
+		var del_last=divwrap.removeChild(last);
+		alert("删除的节点值为:"+del_last.innerHTML);}
+		else
+			alert("没有节点可以删除!")
+	}
+	var searched=new Array();
+	function changeColor(){
+		var key=trim(search.value);
+		var pattern=eval("/"+key+"/ig");
+		var childs=divwrap.childNodes;
+		var yet=new Array();
+		for(var index=0;index<childs.length;index++){
+			yet=childs[index].innerHTML.match(pattern);
+			if(yet){
+				childs[index].className="green";
+				yet.pop();
+				searched.push(childs[index].innerHTML)
+					}
+				else
+					childs[index].className="";
+				}
+				
+		}
+		searchBtn.onclick=changeColor;
+		var greened=new Array();
+	</script>
+</html>
