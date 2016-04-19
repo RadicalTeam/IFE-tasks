@@ -1,0 +1,108 @@
+<!doctype html> 
+<html> 
+<head> 
+    <meta charset="utf-8"> 
+    <title>手风琴效果</title> 
+
+<style  type="text/css">
+*{
+    padding:0;
+    margin:0;
+    text-decoration: none;
+}
+#imageMenu ul *{transition:all linear 0.5s;}
+#imageMenu{
+    width:600px;
+    height:200px;
+}
+#imageMenu li{
+    display: block;
+    width:100px;
+    height:200px;
+    float:left;
+     overflow: hidden;
+}
+#imageMenu li a img{
+    height:200px;
+}
+#imageMenu li.big{
+    width:200px;
+}
+</style>
+</head> 
+<body> 
+<div id="imageMenu">
+    <ul>
+        <li >
+            <a href="#link1"><img src="img/8.jpg"/></a>
+        </li>
+        <li>
+            <a href="#link1"><img src="img/9.jpg"/></a>
+        </li>
+        <li >
+            <a href="#link1"><img src="img/10.jpg"/></a>
+        </li>
+        <li >
+            <a href="#link1"><img src="img/11.jpg"/></a>
+        </li>
+        <li>
+            <a href="#link1"><img src="img/12.jpg"/></a>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+
+// function bind(el, eventType, callback){
+//     if(typeof el.addEventListener === 'function'){
+//         //标准事件绑定方法
+//         el.addEventListener(eventType, callback, false);
+//     }else if(typeof el.attechEvent === 'function'){
+//         //IE事件绑定方法
+//         el.attachEvent('on' + eventType, callback);
+//     }
+// }
+
+//   //鼠标悬停的处理函数
+//      function mouseoverHandler(e){
+         
+//      var target=e.target || e.scrElement;// target方法和scrElement的方法是一样的只是是和不同的浏览器，用于获取当前作用的对象，返回的是对象的引用且未大写，所以判断的部分用大写来判断
+    
+//     //取得每个列表项
+//     var list = document.getElementsByTagName('li');
+//     //清空所有LI元素的big
+//     for(var i = 0; i < list.length; i++){
+//         list[i].className = list[i].className.replace(/ ?big/g, '');
+//     }
+    
+//     //根据事件的冒泡原理，找到需要变更class 的LI元素
+//     while(target.tagName != "LI" && target.Name != "BODY"){
+//         target=target.parentNode;
+//     }
+    
+    
+//     //给当前元素加上class big
+//     target.className += ' big';
+// }
+
+function initList(){
+    //取得外部元素
+    var outer = document.getElementById('imageMenu');
+    //取得每个列表项
+    var list = outer.getElementsByTagName('li');
+    for(var i =0; i < list.length; i++){
+        //对每个列表绑定鼠标悬停事件的监听
+        var classname=this.className;
+        list[i].onmouseover=function(){
+            this.className += ' big';
+        }
+          list[i].onmouseout=function(){
+            this.className=" ";
+        }
+    }
+}
+
+//执行初始化函数
+initList();
+</script>
+</body>
+</html>

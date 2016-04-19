@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>图片轮播效果</title>
+</head>
+<style  type="text/css">
+	*{    margin:0; padding:0; list-style-type:none;    }
+	 *{transition:all linear 0.5s;}
+	#container{   width:800px; height: 560px; margin:50px auto;  overflow:hidden; position:relative;}
+       	#pic_list { width:4800px;  height:560px;  position:absolute; left:0px; }
+	#pic_list li { height:560px; display:block; float:left;}
+	#pic_list li img{ width:800px; height:560px;}
+	#point{ width:150px; height:20px; position:absolute; left:325px; bottom:10px; padding:5px;}
+	#point span{display:block; float:left; width:10px; height:10px; border-radius:10px; background-color:#ccc; margin-left:10px; z-index:9;}
+	#prev{ display:block; width:45px; height:76px; color:#fff; position:absolute;  top:230px; left:10px; z-index:2; background-color:rgba(0,0,0,.3);  font-size:80px; 
+	padding:10px; line-height:76px; text-align:center;}
+	#next{ display:block; width:45px; height:76px; color:#fff; position:absolute;  top:230px; right:10px; z-index:2; background-color:rgba(0,0,0,.3);font-size:80px;
+	 	padding:10px; line-height:76px; text-align:center;}
+	 #point span:hover{
+	 	background-color:#c0f;border-radius:20px;line-height:20px;
+	 }
+	 #point .change{ background-color:red;}
+	 input{
+	 	display: inline-block;
+	 	width:100px;
+	 	height:30px;
+	 	color:rgb(255,255,255);
+	 	background-color:rgba(132,132,205,.5);
+	 	position: absolute;
+	 	bottom:0;
+	 	border-radius: 5px;
+	 	border:solid rgba(20,20,200,.5) 1px;
+	 }
+</style>
+
+<body>
+	<div id="container">
+		<ul id="pic_list">
+			<li><img src="img/7.jpg"></li>
+			<li><img src="img/2.jpg"></li>
+			<li><img src="img/3.jpg"></li>
+			<li><img src="img/4.jpg"></li>
+			<li><img src="img/5.jpg"></li>
+			<li><img src="img/6.jpg"></li>
+		</ul>
+		<a href="##" id="prev"><</a>
+		<a href="##" id="next">></a>
+		<div id="point">
+			<span class="on"></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+		<input type="button"  id="play" value="Play">
+	</div>
+	
+	<script type="text/javascript">
+	window.onload=function(){
+		var pic_list=document.getElementById("pic_list");
+		var buttons=document.getElementsByTagName("span");
+		var prev=document.getElementById("prev");
+		var next=document.getElementById("next");
+		var play=document.getElementById('play');
+		showbutton(0);
+		//下方悬浮按钮的显示，具体的i值由相应的处理后传入
+		function showbutton(i){
+			for(var j=0;j<buttons.length;j++)
+			{
+				if(j==i)
+					buttons[j]. className="change";
+				else
+					buttons[j].className="";
+			}
+		}
+		//通过改变left值播放前一个图片
+		prev.onclick=function(){
+			var pic_left=parseInt(getStyle(pic_list,'left'));
+			var index;
+			if(pic_left!=0)
+				index=pic_left+800+"px";
+			else
+				index=-4000+"px";
+			pic_list.style.left=index;
+			showbutton(parseInt(index)/(-800));
+		}
+		//通过改变left值播放后一个图片
+		next.onclick=function(){
+			var pic_left=parseInt(getStyle(pic_list,'left'));
+			var index;
+			if(pic_left!=-4000)
+				index=pic_left+(-800)+"px";
+			else
+				index=0+"px";
+			pic_list.style.left=index;
+			showbutton(parseInt(index)/(-800));
+		}
+		//为每一个，下方悬浮按钮绑定执行函数
+		 for(var i=0;i<buttons.length;i++) {
+         		!function(i){
+           		 buttons[i].onclick=function(){
+                	pic_list.style.left=(-800)*i+'px';
+                	showbutton(i);
+               	};}(i);}
+               	
+               	
+		//自动播放可停止按钮的执行函数
+		play.onclick=function(){
+			if(play.value=="Play"){
+				play.value="stop";
+				autoPlay();
+			}
+			else{
+				play.value="Play";
+				stopPlay();
+			}
+		}
+		var timer=null;//自动播放和停止的通用定时器
+		function autoPlay(){
+		        timer=setInterval(function(){
+		            next.onclick();
+		        },1000);
+		    }
+		    //停止自动播放
+		    function stopPlay(){
+		        clearInterval(timer);
+		    }
+			}
+		//为获取css样式值定义的函数
+		function getStyle(obj,atrr){
+		if(obj.currentStyle)
+			return obj.currentStyle[atrr];
+		else
+			return getComputedStyle(obj,false)[atrr];
+	}
+	</script>	
+</body>
+</html>
